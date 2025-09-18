@@ -1,0 +1,292 @@
+/*Session1 - Lab 1 (Inheritance)
+Assignment -1.
+● Write a Java program to create a class called Vehicle with a method called
+drive().
+● Vehicle should have attributes such as make (String), model (String) ,
+year (int) and maximumSpeed (int).
+● Create a constructor in Vehicle with all fields as constructor parameters.
+● Create a subclass called Car and override constructor. Call super(). ●
+Write a function that overrides the drive() method to print (make + “ ” +
+model + " Car is driving". )
+● Also create another subclass Bike extending the vehicle class. ●
+Override the drive() method to print (make + “ ” + model + " Bike is
+driving". )
+● Instantiate both Bike and Car class. Print their attributes.
+*/
+
+package lab4;
+
+import java.util.Scanner;
+import java.text.DecimalFormat;
+
+// Base class
+class Shape {
+    public double getArea() {
+        return 0;  // default implementation
+    }
+}
+
+// Circle class
+class Circle extends Shape {
+    private int radius;
+
+    // Constructor
+    public Circle(int radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+// Square class
+class Square extends Shape {
+    private int length;
+
+    // Constructor
+    public Square(int length) {
+        this.length = length;
+    }
+
+    @Override
+    public double getArea() {
+        return length * length;
+    }
+}
+
+// Rectangle class
+class Rectangle extends Shape {
+    private int width;
+    private int height;
+
+    // Constructor
+    public Rectangle(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public double getArea() {
+        return width * height;
+    }
+}
+
+// Main driver
+public class ShapeArea {
+
+    public void runProgram() {
+        Scanner sc = new Scanner(System.in);
+        DecimalFormat df = new DecimalFormat("0.00"); // Format to 2 decimals
+        int choice;
+
+        do {
+            System.out.println("\n=== Shape Area Calculator ===");
+            System.out.println("1. Circle");
+            System.out.println("2. Square");
+            System.out.println("3. Rectangle");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            Shape shape = null;
+
+            switch (choice) {
+                case 1: // Circle
+                    System.out.print("Enter radius: ");
+                    int r = sc.nextInt();
+                    shape = new Circle(r);
+                    break;
+
+                case 2: // Square
+                    System.out.print("Enter length: ");
+                    int l = sc.nextInt();
+                    shape = new Square(l);
+                    break;
+
+                case 3: // Rectangle
+                    System.out.print("Enter width: ");
+                    int w = sc.nextInt();
+                    System.out.print("Enter height: ");
+                    int h = sc.nextInt();
+                    shape = new Rectangle(w, h);
+                    break;
+
+                case 4: // Exit
+                    System.out.println("Exiting program. Goodbye!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+
+            if (shape != null) {
+                System.out.println("Area = " + df.format(shape.getArea()));
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+
+    public static void main(String[] args) {
+        ShapeArea demo = new ShapeArea();
+        demo.runProgram();
+    }
+}
+
+
+/*Assignment -2.
+● Write a Java program to create a class called Shape with a method called
+getArea().
+● Create a subclass called Circle and create a constructor that takes the value
+of radius(int) as input parameter.
+● Override the getArea() method.
+● Create a class called square that takes an attribute length. Create a
+constructor that takes length as input.
+● Override the getArea() method.
+● Create a subclass of Shape called Rectangle that takes width and height as
+input to the constructor.
+● Override the getArea() method to calculate the area of a rectangle.
+Instantiate and call getArea() method.
+*/
+
+
+package lab4;
+
+import java.util.Scanner;
+
+// Base class Vehicle
+class Vehicle {
+    String make;
+    String model;
+    int year;
+    int maximumSpeed;
+
+    // Constructor
+    public Vehicle(String make, String model, int year, int maximumSpeed) {
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.maximumSpeed = maximumSpeed;
+    }
+
+    public void drive() {
+        System.out.println("The vehicle is driving.");
+    }
+
+    public void printDetails() {
+        System.out.println("Make: " + make);
+        System.out.println("Model: " + model);
+        System.out.println("Year: " + year);
+        System.out.println("Maximum Speed: " + maximumSpeed + " km/h");
+    }
+}
+
+// Subclass Car
+class Car extends Vehicle {
+    public Car(String make, String model, int year, int maximumSpeed) {
+        super(make, model, year, maximumSpeed);
+    }
+
+    @Override
+    public void drive() {
+        System.out.println(make + " " + model + " Car is driving.");
+    }
+}
+
+// Subclass Bike
+class Bike extends Vehicle {
+    public Bike(String make, String model, int year, int maximumSpeed) {
+        super(make, model, year, maximumSpeed);
+    }
+
+    @Override
+    public void drive() {
+        System.out.println(make + " " + model + " Bike is driving.");
+    }
+}
+
+// Main class
+public class VehicleDemo {
+
+    // Separate method for menu
+    public void runMenu() {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n--- Vehicle Menu ---");
+            System.out.println("1. Enter Car Details");
+            System.out.println("2. Enter Bike Details");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+            int choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    Car car = createCar(sc);
+                    System.out.println("\nCar Details:");
+                    car.printDetails();
+                    car.drive();
+                    break;
+
+                case 2:
+                    Bike bike = createBike(sc);
+                    System.out.println("\nBike Details:");
+                    bike.printDetails();
+                    bike.drive();
+                    break;
+
+                case 3:
+                    System.out.println("Exiting... Goodbye!");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        }
+    }
+
+    // Method to create Car
+    private Car createCar(Scanner sc) {
+        System.out.println("\nEnter Car Details:");
+        System.out.print("Make: ");
+        String make = sc.nextLine();
+        System.out.print("Model: ");
+        String model = sc.nextLine();
+        System.out.print("Year: ");
+        int year = sc.nextInt();
+        System.out.print("Maximum Speed: ");
+        int speed = sc.nextInt();
+        sc.nextLine(); // consume newline
+        return new Car(make, model, year, speed);
+    }
+
+    // Method to create Bike
+    private Bike createBike(Scanner sc) {
+        System.out.println("\nEnter Bike Details:");
+        System.out.print("Make: ");
+        String make = sc.nextLine();
+        System.out.print("Model: ");
+        String model = sc.nextLine();
+        System.out.print("Year: ");
+        int year = sc.nextInt();
+        System.out.print("Maximum Speed: ");
+        int speed = sc.nextInt();
+        sc.nextLine(); // consume newline
+        return new Bike(make, model, year, speed);
+    }
+
+    // main method just calls runMenu
+    public static void main(String[] args) {
+        VehicleDemo demo = new VehicleDemo();
+        demo.runMenu();
+    }
+}
+
+
+
+
